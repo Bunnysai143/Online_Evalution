@@ -4,18 +4,18 @@ const bcrypt = require("bcryptjs");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
-
 // Initialize Express app
 const app = express();
-const PORT = 5000;
+
 
 // Middleware
 app.use(express.json());
 app.use(cors());
+require('dotenv').config();
 
 // MongoDB connection
 mongoose
-  .connect("mongodb://localhost:27017/OnlineExamDB")
+  .connect(process.env.MONGO_URL)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
@@ -291,4 +291,4 @@ app.get("/students-overview", async (req, res) => {
 
 
 // Start server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(process.env.PORT || "", () => console.log(`Server running on port ${process.env.PORT}`));
